@@ -12,12 +12,10 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-import java.util.List;
-
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @Slf4j
-class StudentControllerTest {
+class StudentControllerPostPutTest {
     @LocalServerPort
     private int port;
 
@@ -29,6 +27,7 @@ class StudentControllerTest {
     void testEnrollStudent() {
         StudentDto studentDto = new StudentDto(null, "John Doe");
 
+        // Create a new student and update it
         webTestClient.post()
                 .uri("/api/v1/student/enroll")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -40,7 +39,7 @@ class StudentControllerTest {
                 .expectBody(String.class)
                 // We can use value() to access result body
                 .value(resultBody -> log.info("Result is : {}", resultBody))
-                .isEqualTo("Student enrolled successfully. Student ID: 1");
+                .isEqualTo("Student enrolled successfully. Student ID: 3");
     }
 
     @Test
@@ -48,6 +47,7 @@ class StudentControllerTest {
     void testUpdateStudent() {
         StudentDto studentDto = new StudentDto(null, "Jane Doe");
 
+        // Create a new student and update it
         webTestClient.post()
                 .uri("/api/v1/student/enroll")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -56,9 +56,9 @@ class StudentControllerTest {
                 .exchange()
                 .expectStatus().isCreated()
                 .expectBody(String.class)
-                .isEqualTo("Student enrolled successfully. Student ID: 2");
+                .isEqualTo("Student enrolled successfully. Student ID: 4");
 
-        StudentDto updatedStudentDto = new StudentDto(2L, "Updated Name");
+        StudentDto updatedStudentDto = new StudentDto(4L, "Updated Name");
         webTestClient.put()
                 .uri("/api/v1/student/update/" + updatedStudentDto.getId())
                 .contentType(MediaType.APPLICATION_JSON)
@@ -67,21 +67,6 @@ class StudentControllerTest {
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(String.class)
-                .isEqualTo("Student with ID 2 updated successfully");
-    }
-
-    @Test
-    @Order(3)
-    void testGetAllStudents() {
-        List<StudentDto> expected = List.of(
-                new StudentDto(1L, "John Doe"),
-                new StudentDto(2L, "Updated Name")
-        );
-        webTestClient.get()
-                .uri("/api/v1/student/list")
-                .exchange()
-                .expectStatus().isOk()
-                .expectBodyList(StudentDto.class)
-                .isEqualTo(expected);
+                .isEqualTo("Student with ID 4 updated successfully");
     }
 }

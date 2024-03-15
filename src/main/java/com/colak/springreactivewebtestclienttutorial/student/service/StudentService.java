@@ -11,8 +11,12 @@ import java.util.List;
 @Service
 public class StudentService {
 
-    private final List<StudentDto> students = new ArrayList<>();
-    private Long nextId = 1L;
+    private final List<StudentDto> students = new ArrayList<>(List.of(
+            new StudentDto(1L, "John Doe"),
+            new StudentDto(2L, "Jane Doe")
+
+    ));
+    private Long nextId = 3L;
 
     public Mono<String> enrollStudent(StudentDto student) {
         return Mono.fromSupplier(() -> {
