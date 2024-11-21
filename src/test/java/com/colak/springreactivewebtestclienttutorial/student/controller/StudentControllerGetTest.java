@@ -1,20 +1,15 @@
 package com.colak.springreactivewebtestclienttutorial.student.controller;
 
 import com.colak.springreactivewebtestclienttutorial.student.dto.StudentDto;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.util.List;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Slf4j
 class StudentControllerGetTest {
-    @LocalServerPort
-    private int port;
 
     @Autowired
     private WebTestClient webTestClient;

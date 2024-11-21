@@ -23,7 +23,7 @@ public class StudentController {
     private final StudentService studentService;
 
     @PostMapping("/enroll")
-    public Mono<ResponseEntity<String>> enrollStudent(@RequestBody StudentDto student) {
+    public Mono<ResponseEntity<StudentDto>> enrollStudent(@RequestBody StudentDto student) {
         return studentService.enrollStudent(student)
                 .map(response -> ResponseEntity.status(HttpStatus.CREATED).body(response));
     }

@@ -18,11 +18,11 @@ public class StudentService {
     ));
     private Long nextId = 3L;
 
-    public Mono<String> enrollStudent(StudentDto student) {
+    public Mono<StudentDto> enrollStudent(StudentDto student) {
         return Mono.fromSupplier(() -> {
             student.setId(nextId++);
             students.add(student);
-            return "Student enrolled successfully. Student ID: " + student.getId();
+            return student;
         });
     }
 
