@@ -30,6 +30,7 @@ class StudentControllerGetTest {
                 .exchange()
                 .expectStatus().isOk()
                 .expectBodyList(StudentDto.class)
+                .hasSize(2)
                 .isEqualTo(expected);
     }
 
